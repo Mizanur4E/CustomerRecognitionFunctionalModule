@@ -25,8 +25,6 @@ def _connect_to_DB():
     return conn
 
 
-
-
 class CustomerRecognizer():
 
     def __init__(self,cam_ip):
@@ -58,9 +56,7 @@ class CustomerRecognizer():
 
     def faceMatching(self):
 
-        '''Search DB against face embedding and return cusomer id'''
-
-        #write some code for searching for the face embedding
+        '''Search DB against face embedding and return cusomer id. If not found then save the embedding with generated id and no'''
 
         self.connection = _connect_to_DB()
         self.connection.autocommit = True
@@ -74,14 +70,15 @@ class CustomerRecognizer():
             sim_ind = sklearn.metrics.pairwise.cosine_similarity(a,self.cus_FE)
             if sim_ind > 0.75:
                 return  row.id
+
         #generate id
         gen_cus_id = row.id + 1
         gen_no = row.no + 1
         new_emb = str(self.cus_FE)
-        #write query to save the embedding with the gen id in the DB
         query2 = "INSERT INTO mytable(no,id,name,embedding) VALUES ((?),(?),'unkwn',(?))"
         cursor.execute(query2,gen_no,gen_cus_id,new_emb)
         return gen_cus_id
+
 
     def camera_test(self):
         cap = cv2.VideoCapture(self.cam_ip)
@@ -103,6 +100,5 @@ class CustomerRecognizer():
 if __name__ == '__main__':
 
     ip = 'rtsp://admin:AiBi@8899@192.168.102.80:554'
-
     cus_recognizer = CustomerRecognizer(ip)
     #cus_recognizer.camera_test()
