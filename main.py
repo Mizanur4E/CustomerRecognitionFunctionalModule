@@ -1,7 +1,8 @@
 import cv2
-#%%
 import sys
 import pyodbc
+import sklearn
+
 
 def _connect_to_DB():
     odbc_driver = '{ODBC Driver 17 for SQL Server}'
@@ -22,6 +23,7 @@ def _connect_to_DB():
         PWD=dataport;"""
     )
     return conn
+
 
 
 
@@ -48,12 +50,11 @@ class CustomerRecognizer():
             else:
                 pass
 
-
         self.cus_BE = None      #generate customer body embedding and face embedding
         self.cus_FE = None
         print('Done Detection!')
-        self.faceMatching()
-        return 0
+        id = self.faceMatching()
+        return id
 
     def faceMatching(self):
 
@@ -70,19 +71,17 @@ class CustomerRecognizer():
             a = row.embedding.split(' ')
             #print(a)
             #measure cosine similarity between self.cus_FE and a
-        #id =  write query to find match (self.connection, self.cus_FE)
-        id = None
-
-        if id is None:
-
-            #generate id
-            gen_cus_id = None
-            #write query to save the embedding with the gen id in the DB
-
-            return gen_cus_id
-        else:
-
-            return id
+            sim_ind = sklearn.metrics.pairwise.cosine_similarity(a,self.cus_FE)
+            if sim_ind > 0.75:
+                return  row.id
+        #generate id
+        gen_cus_id = row.id + 1
+        gen_no = row.no + 1
+        new_emb = str(self.cus_FE)
+        #write query to save the embedding with the gen id in the DB
+        query2 = "INSERT INTO mytable(no,id,name,embedding) VALUES ((?),(?),'unkwn',(?))"
+        cursor.execute(query2,gen_no,gen_cus_id,new_emb)
+        return gen_cus_id
 
     def camera_test(self):
         cap = cv2.VideoCapture(self.cam_ip)
@@ -100,18 +99,6 @@ class CustomerRecognizer():
 
         cv2.destroyAllWindows()
 
-
-    def insert(self, table_name, data_df):
-        if table_name == "Embeddings":
-            sql = "INSERT INTO LapseDetails (TrainingId, CustomerCode, PredictedGroup) " \
-                  "VALUES (?, ?, ?)"
-            print("Inserting into Embeddings")
-        elif table_name == "LapseMaster":
-            sql = "INSERT INTO LapseMaster (TrainingId, TrainingDate, ForecustingFor, SourceDateStart, SourceDateEnd, WriteBackTime, ForecastedMonth) " \
-                  "VALUES (?, ?, ?, ?, ?, ?, ?)"
-            print("Inserting into LapseMaster")
-        except Exception as e:
-            print(e)
 
 if __name__ == '__main__':
 
