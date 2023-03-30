@@ -31,9 +31,9 @@ class CustomerRecognizer():
         print("initializing the recognizer...!")
         self.cam_ip = cam_ip
         print(self.cam_ip)
-        while True:
-            cus_id = self.faceDetector()
-            #use the cus_id to assign the invoice
+        # while True:
+        #     cus_id = self.faceDetector()
+        #     #use the cus_id to assign the invoice
 
     def faceDetector(self):
 
@@ -101,4 +101,4 @@ if __name__ == '__main__':
 
     ip = 'rtsp://admin:AiBi@8899@192.168.102.80:554'
     cus_recognizer = CustomerRecognizer(ip)
-    #cus_recognizer.camera_test()
+    cus_recognizer.camera_test()
