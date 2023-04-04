@@ -55,6 +55,7 @@ class FaceClass:
 
 
         ref = [250, 75, 450, 350]
+        box_area = abs((ref[3]-ref[1])*(ref[2]-ref[0]))
 
         for face, region in zip(faces, face_region):
             print(region)
@@ -62,7 +63,7 @@ class FaceClass:
                 print('yes here')
 
                 new_area = abs((region[3]-region[1])*(region[2]-region[0]))
-                if new_area > area:
+                if new_area > area and new_area > 0.1*box_area:
                     tar_face = face
                     tar_region = region
                     area = new_area
@@ -128,7 +129,7 @@ class FaceClass:
 
 
             current_time = datetime.now().strftime("%H:%M:%S")
-            # except:
+            # except:q
             #     print('Face Loading error, shape:', face.shape)
 
             detected_name = name
