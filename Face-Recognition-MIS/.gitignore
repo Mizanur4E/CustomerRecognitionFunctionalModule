@@ -1,0 +1,11 @@
+*.jpg
+*.mp4
+*.mp3
+all_videos/
+all_images/
+cropped_dataset/
+*__pycache__
+.idea/
+models/
+test/
+audio_data/

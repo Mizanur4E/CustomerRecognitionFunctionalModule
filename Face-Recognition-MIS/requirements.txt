@@ -1,0 +1,21 @@
+# ArcFace
+
+tensorflow>=2.3.0
+pyyaml>=5.3
+opencv-python==4.5.4.60
+requests>=2.24.0
+
+# Retina
+
+Pillow>=5.2.0
+torch==1.11.0
+torchvision==0.12.0
+torchsummary>=1.5.1
+
+
+pandas
+pyodbc
+
+# audio
+gTTS
+pygame
