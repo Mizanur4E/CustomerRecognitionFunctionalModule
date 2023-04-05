@@ -102,12 +102,12 @@ class FaceClass:
                     else:
                         same_unkwn_detected.clear()
 
-            if len(same_unkwn_detected) > 15:
+            if len(same_unkwn_detected) > 10:
                 print('New Person Detected')
                 same_unkwn_detected.clear()
                 id = len(self.face_db.index)
-                name = str(id+111)+'jja'
-                for emb in memory[-12:]:
+                name = str(id+111)+'-SWPNO'
+                for emb in memory[-10:]:
 
                     entry = [id, name]
                     for i in emb:
@@ -141,7 +141,7 @@ class FaceClass:
 
             t2 = time.time()
             fps = round(1 / (t2 - t1), 1)
-            cv2.rectangle(image_out, (40, 0), (300, 70), (0, 255, 0), -1)
-            cv2.putText(image_out, f'FPS : {fps}', (50, 50), cv2.FONT_HERSHEY_COMPLEX_SMALL, 2, (0, 128, 0),
-                        thickness=2, lineType=1)
+            cv2.rectangle(image_out, (40, 30), (180, 60), (0, 0, 102), -1)
+            cv2.putText(image_out, f'FPS : {fps}', (50, 50), cv2.FONT_HERSHEY_COMPLEX_SMALL, 1, (255, 255, 255),
+                        thickness=1, lineType=1)
             return org_img

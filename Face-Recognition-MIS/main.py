@@ -60,7 +60,7 @@ def process_video(show=True, threshold=0.65):
     else:
         print('Unable to connect camera')
 
-def process_video_v2(show=True, threshold=0.65):
+def process_video_v2(show=True, threshold=0.60):
 
 
     url = 0
@@ -78,7 +78,7 @@ def process_video_v2(show=True, threshold=0.65):
             #image = cv2.resize(image, (1080,1080))
             if show:
 
-                cv2.rectangle(image, (250, 75), (450, 350), (255, 0, 0), 5)
+                cv2.rectangle(image, (250, 75), (450, 350), (204, 204, 0), 5)
                 image = cv2.resize(image, (880,580))
                 cv2.imshow('Face Recognition MIS', image)
                 if cv2.waitKey(1) & 0xFF == ord('q'):
