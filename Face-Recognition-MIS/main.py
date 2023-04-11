@@ -63,7 +63,8 @@ def process_video(show=True, threshold=0.65):
 def process_video_v2(show=True, threshold=0.60):
 
 
-    url = 0
+    #url = 0
+    url = 'rtsp://admin:AiBi@8899@192.168.102.80:554'
     cap = CustomVideoCapture(url)
     FC = FaceClass(threshold=threshold)
     memory =[]
@@ -71,6 +72,9 @@ def process_video_v2(show=True, threshold=0.60):
     if cap.isOpened():
         while True:
             frame = cap.read()
+            #resize to a fixed shape to function properly
+            frame = cv2.resize(frame, (640,480))
+            print(frame.shape)
             if len(memory) > 512:
                 memory = memory[-256:]
             print(len(memory))
