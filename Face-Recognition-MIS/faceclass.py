@@ -27,6 +27,7 @@ class FaceClass:
         known_labels = self.face_db.iloc[:, 0]
         self.known_labels = np.array(known_labels)
         self.names = self.face_db.iloc[:, 1]
+        self.names = self.face_db.iloc[:, 1]
 
         if torch.cuda.is_available():
             self.retina = RetinaGPU(0)  # (-1) for CPU, (0) for GPU

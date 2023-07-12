@@ -56,6 +56,6 @@ class RetinaGPU():
             
             cropped_faces.append(facial_img)
 
-        return cropped_faces,regions
+        return cropped_faces, regions
 
 

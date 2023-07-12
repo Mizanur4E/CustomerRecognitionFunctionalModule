@@ -63,8 +63,8 @@ def process_video(show=True, threshold=0.65):
 def process_video_v2(show=True, threshold=0.60):
 
 
-    #url = 0
-    url = 'rtsp://admin:AiBi@8899@192.168.102.80:554'
+    url = 0
+    #url = 'rtsp://admin:AiBi@8899@192.168.102.80:554'
     cap = CustomVideoCapture(url)
     FC = FaceClass(threshold=threshold)
     memory =[]
